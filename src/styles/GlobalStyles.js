@@ -61,7 +61,7 @@ const GlobalStyles = createGlobalStyle`
 *::after {
   box-sizing: border-box;
   padding: 0;
-  margin: 0;
+  margin: 0.2px;
 
   /* Creating animations for dark mode */
   transition: background-color 0.3s, border 0.3s;
@@ -79,6 +79,7 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+ 
 }
 
 input,

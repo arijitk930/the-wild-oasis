@@ -13,10 +13,10 @@ function AddCabin() {
         <CreateCabinForm />
       </Modal.Window>
 
-      <Modal.Open opens="cabin-form">
+      <Modal.Open opens="table">
         <Button>Show table</Button>
       </Modal.Open>
-      <Modal.Window name="cabin-form">
+      <Modal.Window name="table">
         <CabinTable />
       </Modal.Window>
     </Modal>

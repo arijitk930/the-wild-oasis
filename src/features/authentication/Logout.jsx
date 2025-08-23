@@ -3,7 +3,7 @@ import ButtonIcon from "../../ui/ButtonIcon.jsx";
 import { useLogout } from "./useLogout.js";
 import SpinnerMini from "../../ui/SpinnerMini.jsx";
 
-function Logut() {
+function Logout() {
   const { logout, isLoading } = useLogout();
 
   return (
@@ -13,4 +13,4 @@ function Logut() {
   );
 }
 
-export default Logut;
+export default Logout;

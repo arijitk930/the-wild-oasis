@@ -1,5 +1,17 @@
 import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
+import Heading from "../../ui/Heading";
+import { useDarkMode } from "../../context/DarkModeContext";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -57,3 +69,57 @@ const colors = isDarkMode
       text: "#374151",
       background: "#fff",
     };
+
+function SalesChart({ bookings = [], numDays }) {
+  const { isDarkMode } = useDarkMode();
+
+  const allDates = eachDayOfInterval({
+    start: subDays(new Date(), numDays - 1),
+    end: new Date(),
+  });
+
+  const data = allDates.map((date) => {
+    return {
+      label: format(date, "MMM dd"),
+      totalSales: bookings
+        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .reduce((acc, cur) => acc + cur.totalPrice, 0),
+
+      extraSales: bookings
+        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .reduce((acc, cur) => acc + cur.extrasPrice, 0),
+    };
+  });
+
+  return (
+    <StyledSalesChart>
+      <Heading as="h2">Sales</Heading>
+      {/* ResponsiveContainer makes the chart scale properly */}
+      <ResponsiveContainer width="100%" height={300}>
+        <AreaChart
+          data={data}
+          margin={{ top: 20, right: 20, left: 0, bottom: 0 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="label" stroke={colors.text} />
+          <YAxis unit="$" />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="totalSales"
+            stroke={colors.totalSales.stroke}
+            fill={colors.totalSales.fill}
+          />
+          <Area
+            type="monotone"
+            dataKey="extrasSales"
+            stroke={colors.extrasSales.stroke}
+            fill={colors.extrasSales.fill}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </StyledSalesChart>
+  );
+}
+
+export default SalesChart;

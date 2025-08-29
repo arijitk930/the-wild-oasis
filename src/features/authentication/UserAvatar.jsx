@@ -26,6 +26,7 @@ function UserAvatar() {
   const { user, isLoading } = useUser();
 
   if (isLoading) return <Spinner />;
+  if (!user) return null;
 
   const { fullName, avatar } = user.user_metadata || {};
 

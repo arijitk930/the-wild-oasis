@@ -106,7 +106,7 @@ const GlobalStyles = createGlobalStyle`
 *::after {
   box-sizing: border-box;
   padding: 0;
-  margin: 0.2px;
+  margin: 0px;
 
   /* Creating animations for dark mode */
   transition: background-color 0.3s, border 0.3s;
